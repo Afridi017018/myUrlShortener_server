@@ -1,16 +1,17 @@
 import React from 'react';
 import './TextInput.css'
 
-const TextInput = ({ label, placeholder, onChange }) => {
+const TextInput = ({ label, placeholder, onChange,type, value }) => {
     return (
         <div className='text-input'>
 
             {Boolean(label) && <label htmlFor="">{label}</label>}
 
             <input
-                type="text"
+                type={type}
                 placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}
+                value = {value}
             />
         </div>
     );

@@ -53,8 +53,8 @@ const Dashboard = () => {
         return (
             <div className="dashboard__empty-state">
 
-                <TextInput label="Original Url" placeholder="https://www.google.com/" onChange={(val) => setPayload({...payload , originalLink: val})} />
-                <TextInput label="Name" placeholder="Name" onChange={(val) => setPayload({...payload , name: val})} />
+                <TextInput label="Original Url" placeholder="https://www.google.com/" value={payload.originalLink}  onChange={(val) => setPayload({...payload , originalLink: val})} />
+                <TextInput label="Name" placeholder="Name" value={payload.name} onChange={(val) => setPayload({...payload , name: val})} />
 
                 <div className="dashboard__add-new-actions">
                     <Button onClick={handleClick} label="Generate a short url" />
