@@ -4,18 +4,19 @@ const shortId = require("shortId")
 const Url = require("../models/urlModel")
 
 router.get("/", (req, res) => {
+  
     res.send("DONE!!!")
 })
 
 router.post("/", async (req, res) => {
-    // console.log(req.body)
+
     try {
-        const { originalLink } = req.body;
+        const { originalLink, userId } = req.body;
         const urlCode = shortId.generate();
         const data = await Url.findOne({originalLink})
         if(data)
         {
-            // console.log(data)
+     
             return res.json(data)
         }
 
@@ -26,14 +27,16 @@ router.post("/", async (req, res) => {
              newUrl = new Url({
                 originalLink,
                 urlCode,
-                name
+                name,
+                userId
             }) 
         }
 
         else{
              newUrl = new Url({
                 originalLink,
-                urlCode
+                urlCode,
+                userId
             })
         }
      

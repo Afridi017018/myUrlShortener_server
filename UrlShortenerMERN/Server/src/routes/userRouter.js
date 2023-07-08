@@ -15,6 +15,8 @@ router.use(passport.initialize())
 router.use(passport.session())
 
 
+
+
 router.post("/reg", async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -50,8 +52,10 @@ router.post('/login', (req, res, next) => {
     }
 
    req.session.user = user; // Store user object in session
+ 
 
-    return res.json({ message: "Authentication successful",isLoggedIn: true , email: req.session.user.email });
+// console.log(req.session.user)
+    return res.json({ message: "Authentication successful",isLoggedIn: true , email: req.session.user.email});
   })(req, res, next);
 });
 
@@ -59,8 +63,8 @@ router.post('/login', (req, res, next) => {
 router.get('/check-login', function (req, res) {
 
   if (req.session.user) {
-  
-    return res.status(200).json({ isLoggedIn: true , email: req.session.user.email});
+
+    return res.status(200).json({ isLoggedIn: true , email: req.session.user.email, id: req.session.user.id });
   }
 
     return res.status(401).json({ isLoggedIn: false });
@@ -78,5 +82,5 @@ router.get("/logout",(req,res)=>{
   });
 })
 
-
-module.exports = router;
+// console.log(req.session.user)
+module.exports = router

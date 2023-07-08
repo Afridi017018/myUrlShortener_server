@@ -7,12 +7,13 @@ import "./Dashboard.css"
 
 
 
-const Dashboard = () => {
+const Dashboard = ({userId}) => {
 
     const [addView, setAddView] = useState(false)
     const [payload , setPayload] = useState({
         originalLink: "",
-        name: ""
+        name: "",
+        userId: ""
     })
 
     const [shortUrl , setShrotUrl] = useState("")
@@ -27,7 +28,7 @@ const Dashboard = () => {
             headers:{
                 "Content-Type" : "application/json"
             },
-            body : JSON.stringify(payload)
+            body : JSON.stringify({...payload,userId:userId})
         })
         .then(response=> response.json())
         .then(data => {

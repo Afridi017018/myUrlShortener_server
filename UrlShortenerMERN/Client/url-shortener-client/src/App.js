@@ -8,6 +8,7 @@ import MainRoutes from './Routes';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userId, setUserId] = useState("")
 
 useEffect(() => {
  fetch('http://localhost:4000/user/check-login', {
@@ -19,16 +20,17 @@ useEffect(() => {
  })
    .then(response => response.json())
    .then(data => {
+      setUserId(data.id)
      setIsLoggedIn(data.isLoggedIn);
      setIsLoading(false);
-     // console.log(data.isLoggedIn)
+     
    });
 }, [isLoggedIn]); 
   return (
     <div className='app'>
       <Appbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
 
-      <MainRoutes isLoggedIn={isLoggedIn} isLoading={isLoading} setIsLoggedIn={setIsLoggedIn}/>
+      <MainRoutes isLoggedIn={isLoggedIn} isLoading={isLoading} setIsLoggedIn={setIsLoggedIn} userId = {userId} />
       
     </div>
   );

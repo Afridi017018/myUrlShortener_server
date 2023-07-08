@@ -5,14 +5,14 @@ import Login from './pages/Auth/Login';
 import Signup from './pages/Auth/Signup';
 import Dashboard from './pages/Dashboard/Dashboard';
 
-const MainRoutes = ({isLoggedIn , isLoading, setIsLoggedIn}) => {
+const MainRoutes = ({isLoggedIn , isLoading, setIsLoggedIn, userId}) => {
    
 
     return (
         <Routes>
             <Route path = '/' element = {<PrivateRoute isLoggedIn={isLoggedIn} isLoading={isLoading} />}> 
             <Route path='/' element={<Navigate replace to = "dashboard" /> }/>
-            <Route path='dashboard' element = {<Dashboard/>} />
+            <Route path='dashboard' element = {<Dashboard userId = {userId} />} />
             </Route>
 
             <Route path ='/' element = {<PublicRoute isLoggedIn={isLoggedIn} isLoading={isLoading}/> }> 
