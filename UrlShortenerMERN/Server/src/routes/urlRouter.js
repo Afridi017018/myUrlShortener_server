@@ -52,6 +52,50 @@ router.post("/", async (req, res) => {
 
 
 
+router.put("/update-url",async(req,res)=>{
+    console.log(req.body)
+     
+    const {urlCode, name , originalLink} = req.body;
+
+    const data = await Url.findOne({originalLink});
+
+    if(data.urlCode === urlCode || !data ){
+    const updated = await Url.findOneAndUpdate({urlCode},{ name: name, originalLink: originalLink })
+    res.json({message:"Updated"})
+    }
+
+    else{
+        // console.log(data)
+        res.json({message:"Already generated short url for this original link"})
+    }
+    
+})
+
+
+router.delete("/delete-url",async(req,res)=>{
+
+    const {urlCode} = req.body
+     const data = await Url.findOneAndDelete({urlCode: urlCode})
+    res.json({message: data})
+    // console.log(data)
+
+})
+
+
+
+router.get("/urlData/:id", async (req, res) => {
+    try {
+      const urlData = await Url.find({ userId: req.params.id });
+    //   console.log(urlData);
+    //   console.log(req.params.id)
+      res.send(urlData);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+  
+
 router.get("/:urlCode",async(req,res)=>{
     const {urlCode} = req.params;
    
@@ -62,7 +106,7 @@ router.get("/:urlCode",async(req,res)=>{
     data.visitCount = data.visitCount + 1;
 
 
-    await Url.findOneAndUpdate({ urlCode }, data);
+    const visitUpdate = await Url.findOneAndUpdate({ urlCode }, data);
 
     res.redirect(data.originalLink)
     

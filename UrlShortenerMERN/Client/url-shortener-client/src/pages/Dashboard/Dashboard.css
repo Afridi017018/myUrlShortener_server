@@ -26,4 +26,185 @@ margin-top:16px;
 }
 .shortUrl{
 	text-align: center;
+	margin-top: 5px;
 }
+.shortUrl > p{
+	display: inline;
+}
+
+
+
+.table-container {
+	margin-top: 50px;
+	overflow-x: auto;
+	/* background-color: rgb(91, 142, 209); */
+	border: 1px gray solid;
+	border-radius: 5px;
+	box-shadow: 2px 2px 12px 8px gray;
+	/* padding:1px;
+	background-color: gray; */
+  }
+  
+  thead tr{
+	background-color: rgb(190, 217, 228) ;
+  }
+
+  table {
+	width: 100%;
+	border-collapse: collapse;
+  }
+  
+  th, td {
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+  }
+  td {
+    max-width: 250px;
+	word-wrap: break-word;
+}
+
+  tbody tr:nth-child(even) {
+	background-color: rgba(243, 237, 237, 0.952);
+	margin: 5px;
+	padding: 5px;
+	border-radius: 5px;
+  }
+  tbody tr:nth-child(odd) {
+	background-color: rgb(220, 226, 225);
+	margin: 5px;
+	padding: 5px;
+	border-radius: 5px;
+  }
+  
+
+  .modal-update-button{
+	text-align: center;
+  }
+  .modal-update-button-1 {
+	margin-top: 10px;
+	width: 30%;
+	padding: 10px;
+	background-color: rgb(33, 119, 248);
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+  }
+  .modal-update-button-2 {
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 30%;
+	padding: 10px;
+	background-color: gray;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+  }
+
+.action-button-1{
+	background-color: rgb(11, 105, 245);
+	padding: 8px;
+	border-radius: 4px;
+	color: white;
+	width: 80%;
+	margin-bottom: 2px;
+	cursor: pointer;
+}
+
+.action-button-2{
+	background-color: rgb(199, 40, 40);
+	padding: 8px;
+	border-radius: 4px;
+	width: 80%;
+	color: white;
+	margin-top: 2px;
+	cursor: pointer;
+}
+
+
+.clipboard-button{
+	color: rgb(104, 101, 101);
+	cursor: pointer;
+	margin-left: 10px;
+	font-size: 16px;
+	height: 16px;
+
+}
+
+.clipboard-button :hover{
+	color: rgb(62, 163, 202);
+
+}
+
+
+.popup {
+	position: absolute;
+	top: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 8px 16px;
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	font-size: 14px;
+	color: #333;
+	
+  }
+
+
+
+@media only screen and (max-width: 696px) {
+	table, thead, tbody, th, td, tr {
+	  display: block;
+
+	}
+
+	
+  
+	th {
+	  position: absolute;
+	  top: -9999px;
+	  left: -9999px;
+	}
+  
+	td {
+	  border: none;
+	  position: relative;
+	  padding-left: 50%;
+	  word-wrap: break-word;
+	  max-width: 100%;
+	 
+	}
+  
+	td:before {
+	  position: absolute;
+	  top: 6px;
+	  left: 6px;
+	  width: 45%;
+	  padding-right: 10px;
+	  white-space: nowrap;
+	}
+  
+	td:nth-of-type(1):before {
+	  content: "Name";
+	}
+  
+	td:nth-of-type(2):before {
+	  content: "Original Link";
+	}
+  
+	td:nth-of-type(3):before {
+	  content: "Short Link";
+	}
+	
+	td:nth-of-type(4):before {
+	  content: "Visit";
+	}
+	
+	td:nth-of-type(5):before {
+	  content: "Added Date";
+	}
+  
+	td:nth-of-type(6):before {
+	  content: "Actions";
+	}
+  }
