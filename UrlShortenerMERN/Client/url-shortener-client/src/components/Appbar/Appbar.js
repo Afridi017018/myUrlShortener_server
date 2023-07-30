@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Appbar.css'
 import img from '../../assets/image/logo.png'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Appbar = ({isLoggedIn , setIsLoggedIn}) => {
@@ -30,11 +30,16 @@ const Appbar = ({isLoggedIn , setIsLoggedIn}) => {
   return (
     <div className='appbar'>
       <div className="appbar__inner">
-        <img src={img} alt="" />
+        <img onClick={()=>navigate("/dashboard")} src={img} alt="" />
 
         <div className="appbar__menus">
-          <h3 className="active">Dashboard</h3>
-          <h3>Profile</h3>
+        <Link to='/dashboard'>
+            <h3 className={window.location.pathname === '/dashboard' ? 'active' : ''}>Dashboard</h3>
+          </Link>
+          <Link to='/profile'>
+            <h3 className={window.location.pathname === '/profile' ? 'active' : ''}>Profile</h3>
+          </Link>
+
            { isLoggedIn &&   <button className='logout' onClick={handleLogout}>Logout</button>  }
         </div>
 

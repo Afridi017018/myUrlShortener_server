@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import TextInput from '../../components/TextInput/TextInput';
 import img from "../../assets/image/logo.png"
@@ -9,7 +9,7 @@ import "./auth.css"
 
 const Signup = () => {
 
-
+    const navigate = useNavigate();
 
     const [signupPayload, setSignupPayload] = useState({
         name: "",
@@ -30,6 +30,10 @@ const Signup = () => {
             .then(response => response.json())
             .then(data => {
                 alert(data.message)
+               if(data.value === "1")
+               {
+                navigate('/login')
+               }
             })
 
     }
@@ -71,6 +75,7 @@ const Signup = () => {
                             })
                         }
                         type="password"
+                        placeholder="*****"
                     />
                 </div>
                 <div className="auth__action">
@@ -81,6 +86,9 @@ const Signup = () => {
                     <p>
                         Already have an account? <Link to="/login">Login</Link>
                     </p>
+
+              
+
                 </div>
             </div>
         </div>

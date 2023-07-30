@@ -32,6 +32,15 @@ margin-top:16px;
 	display: inline;
 }
 
+.invalidUrl{
+	text-align: center;
+	margin-top: 5px;
+}
+.invalidUrl > p{
+	display: inline;
+	color: red;
+}
+
 
 
 .table-container {

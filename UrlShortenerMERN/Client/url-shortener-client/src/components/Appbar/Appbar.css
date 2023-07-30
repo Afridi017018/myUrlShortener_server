@@ -13,6 +13,11 @@
 	max-height:100px;
 	object-fit: contain;
 }
+
+/* .appbar__inner img:hover{
+	cursor: pointer;
+} */
+
 .appbar__menus{
 	display: flex;
 }
@@ -20,7 +25,7 @@
 	color:var(--lightGrey);
 	margin-left: 20px;
 }
-.appbar__menus h3.active{
+.appbar__menus .active{
 	color:var(--darkBlack);
 }
 
@@ -34,5 +39,11 @@ background-color: rgb(235, 230, 230);
   border-radius: 4px;
   margin-left: 10px;
   padding: 8px;
+}
+
+.logout:hover{
+	background-color: rgb(139, 207, 235);
+	color: white;
+
 }
 

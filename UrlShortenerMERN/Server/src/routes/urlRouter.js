@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const router = Router()
 const shortId = require("shortId")
+const isUrlValid = require('url-validation');
+
 const Url = require("../models/urlModel")
 
 router.get("/", (req, res) => {
@@ -13,14 +15,24 @@ router.post("/", async (req, res) => {
     try {
         const { originalLink, userId } = req.body;
         const urlCode = shortId.generate();
+
+
+        const isValidUrl = isUrlValid(originalLink);
+        // console.log(isUrlValid(originalLink))
+        if(!isValidUrl){
+            // console.log(isValidUrl)
+            return res.json({isValidUrl: isValidUrl})
+        }
+
+
         const data = await Url.findOne({originalLink})
         if(data)
         {
      
-            return res.json(data)
+            return res.json({urlCode: data.urlCode,isValidUrl: isValidUrl})
         }
 
-
+        
         if(req.body.name)
         {
             const {name} = req.body;
@@ -41,7 +53,7 @@ router.post("/", async (req, res) => {
         }
      
         const saved = await newUrl.save();
-        return res.json(saved)
+        return res.json({urlCode: saved.urlCode,isValidUrl: isValidUrl})
     }
     catch (err) {
         return res.status(400).json({err})
@@ -53,13 +65,27 @@ router.post("/", async (req, res) => {
 
 
 router.put("/update-url",async(req,res)=>{
-    console.log(req.body)
+    // console.log(req.body)
      
     const {urlCode, name , originalLink} = req.body;
 
-    const data = await Url.findOne({originalLink});
+    const isValidUrl = isUrlValid(originalLink);
+        // console.log(isUrlValid(originalLink))
+        if(!isValidUrl){
+            // console.log(isValidUrl)
+            return res.json({message: "Invalid url !"})
+        }
 
-    if(data.urlCode === urlCode || !data ){
+    if(!originalLink)
+     {
+        res.json({message:"Original link is needed!"})
+     }
+
+    else{
+        const data = await Url.findOne({originalLink});
+
+    if(!data || data && data.urlCode === urlCode){
+        // console.log(data)
     const updated = await Url.findOneAndUpdate({urlCode},{ name: name, originalLink: originalLink })
     res.json({message:"Updated"})
     }
@@ -67,6 +93,7 @@ router.put("/update-url",async(req,res)=>{
     else{
         // console.log(data)
         res.json({message:"Already generated short url for this original link"})
+    }
     }
     
 })
@@ -80,6 +107,7 @@ router.delete("/delete-url",async(req,res)=>{
     // console.log(data)
 
 })
+
 
 
 

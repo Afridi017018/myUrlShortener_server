@@ -27,7 +27,10 @@ const Login = ({setIsLoggedIn}) => {
     })
       .then(response => response.json())
       .then(data => {
-        // alert(data.message)
+        if(!data.isLoggedIn)
+        {
+          alert(data.message)
+        }
         setIsLoggedIn(data.isLoggedIn)
       })
 
@@ -39,20 +42,20 @@ const Login = ({setIsLoggedIn}) => {
 
 
 
-  const handleCheck = () => {
-    fetch('http://localhost:4000/user/check-login', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include' 
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      });
+  // const handleCheck = () => {
+  //   fetch('http://localhost:4000/user/check-login', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     credentials: 'include' 
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log(data);
+  //     });
 
-  }
+  // }
 
   return (
     <div className="auth">
@@ -68,7 +71,7 @@ const Login = ({setIsLoggedIn}) => {
                 email: val,
               })
             }
-            placeholder="name@email.com"
+            placeholder="xyz@email.com"
           />
           <TextInput
             label="Password"
@@ -80,11 +83,12 @@ const Login = ({setIsLoggedIn}) => {
               })
             }
             type="password"
+            placeholder="*****"
           />
         </div>
         <div className="auth__action">
           <Button label="Login" onClick={handleLogin} />
-          <Button label="Check" onClick={handleCheck} />
+          {/* <Button label="Check" onClick={handleCheck} /> */}
           <p>
             No account yet? <Link to="/signup">Signup</Link>
           </p>

@@ -15,13 +15,15 @@ import "./Dashboard.css"
 const Dashboard = ({ userId }) => {
 
     const [addView, setAddView] = useState(false)
+    const [isValidUrl, setIsValidUrl] = useState(false)
+    const [invalidText, setInvalidText] = useState(false)
     const [payload, setPayload] = useState({
         originalLink: "",
         name: "",
         userId: ""
     })
 
-    const [shortUrl, setShrotUrl] = useState("")
+    const [shortUrl, setShortUrl] = useState("")
 
     const [urlsData, setUrlsData] = useState([])
 
@@ -50,8 +52,10 @@ const Dashboard = ({ userId }) => {
 
 
     const handleClick = () => {
-        if (!payload.originalLink)
+        if (!payload.originalLink){
+            setInvalidText(false)
             return alert("Original link is needed!")
+        }
 
 
         fetch(`http://localhost:4000/url/`, {
@@ -63,7 +67,19 @@ const Dashboard = ({ userId }) => {
         })
             .then(response => response.json())
             .then(data => {
-                setShrotUrl(`http://localhost:4000/url/${data.urlCode}`)
+             if(data.isValidUrl)
+             {
+                // console.log(data.isValidUrl)
+                setIsValidUrl(true);
+                setInvalidText(false)
+                setShortUrl(`http://localhost:4000/url/${data.urlCode}`)
+             }
+             else{
+             setIsValidUrl(false);
+             setInvalidText(true)
+             }
+             
+                    
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -180,8 +196,23 @@ const Dashboard = ({ userId }) => {
                 addView ? addNewUrl() : emptyUrl()
             }
             {
-                addView && <div className='shortUrl'>  <p>{shortUrl}</p> {shortUrl && <button className='clipboard-button'><FaClone onClick={()=>handleClipboard(shortUrl)}/></button>}</div>
+                addView &&
+                <div>
+
+                 {isValidUrl ?
+                <div className='shortUrl'>  
+                <p>{shortUrl}</p> {shortUrl && <button className='clipboard-button'>
+                <FaClone onClick={()=>handleClipboard(shortUrl)}/></button>}
+                </div>
+                :
+                <div className='invalidUrl'>  
+                 {invalidText && <p>Invalid url !</p>}
+                </div>
+                }
+
+                </div>
             }
+
 
             <div className="test-model">
                 {
