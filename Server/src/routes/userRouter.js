@@ -1,24 +1,39 @@
 const { Router } = require('express');
 const router = Router();
 const ip = require('ip');
-const session = require("express-session")
 const bcrypt = require("bcrypt")
 const validator = require('validator');
 const User = require("../models/userModel");
 const passport = require("../auth/Auth");
 
+
 const saltRounds = 10;
 
-router.use(session({
-  secret: 'keyboard cat',
-  resave:false,
-  saveUninitialized:true,
-  cookie:{secure:false}
-}))
 
-router.use(passport.initialize())
-router.use(passport.session())
 
+const isAuthenticated = (req, res, next) => {
+  // console.log(req.user)
+
+  if (req.session.user) {
+    // console.log("hmmm ashche to")
+      return next();
+  }
+  return res.status(401).json({ "message": "Unauthorized access!" })
+}
+
+
+// router.use((req, res, next) => {
+//   req.user = req.session.user;
+//   next();
+// });
+
+// router.use(isAuthenticated);
+
+// app.get("/", isAuthenticated, (req, res) => {
+
+//   res.json({ "message": "WELCOME!!!" })
+
+// })
 
 
 
@@ -76,7 +91,7 @@ router.post('/login', (req, res, next) => {
 });
 
 
-router.get('/check-login', function (req, res) {
+router.get('/check-login', isAuthenticated, function (req, res) {
 
   if (req.session.user) {
     // console.log(req.session.user)
@@ -88,7 +103,7 @@ router.get('/check-login', function (req, res) {
 });
 
 
-router.put("/update-profile", async(req,res)=>{
+router.put("/update-profile", isAuthenticated, async(req,res)=>{
 
   const {id,image,name} = req.body;
 
@@ -111,7 +126,7 @@ router.put("/update-profile", async(req,res)=>{
 })
 
 
-router.put("/change-password", async(req,res)=>{
+router.put("/change-password", isAuthenticated, async(req,res)=>{
   
   const {id, oldPass, newPass} = req.body;
   // console.log(req.body)

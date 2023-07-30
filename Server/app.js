@@ -3,6 +3,8 @@ const cors = require("cors")
 const dbConnect = require("./src/config/db");
 const urlRouter = require("./src/routes/urlRouter");
 const userRouter = require("./src/routes/userRouter");
+const passport = require("./src/auth/Auth");
+const session = require("express-session")
 
 
 
@@ -23,8 +25,20 @@ app.use(express.json());
 
 dbConnect();
 
-app.use("/url",urlRouter)
-app.use("/user",userRouter)
+
+app.use(session({
+  secret: process.env.session_secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use("/user", userRouter)
+app.use("/url", urlRouter)
+
 
 
 module.exports = app;
