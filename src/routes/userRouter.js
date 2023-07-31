@@ -14,11 +14,12 @@ const saltRounds = 10;
 const isAuthenticated = (req, res, next) => {
   // console.log(req.user)
 
-  if (req.session.user) {
-    // console.log("hmmm ashche to")
-      return next();
-  }
-  return res.status(401).json({ "message": "Unauthorized access!" })
+  // if (req.session.user) {
+  //   // console.log("hmmm ashche to")
+  //     return next();
+  // }
+  // return res.status(401).json({ "message": "Unauthorized access!" })
+  return next()
 }
 
 
