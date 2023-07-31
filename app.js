@@ -30,7 +30,7 @@ dbConnect();
 app.use(session({
   secret: process.env.session_secret,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: { secure: false },
   store: MongoStore.create({ mongoUrl: process.env.URL })
 }))

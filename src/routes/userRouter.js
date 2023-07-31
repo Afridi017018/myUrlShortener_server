@@ -84,7 +84,7 @@ router.post('/login', (req, res, next) => {
     }
 
    req.session.user = user; // Store user object in session
-   req.session.save();
+  //  req.session.save();
  
 
 // console.log(req.session.user)
