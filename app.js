@@ -5,6 +5,7 @@ const urlRouter = require("./src/routes/urlRouter");
 const userRouter = require("./src/routes/userRouter");
 const passport = require("./src/auth/Auth");
 const session = require("express-session")
+const MongoStore = require("connect-mongo");
 
 
 
@@ -30,7 +31,8 @@ app.use(session({
   secret: process.env.session_secret,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: false },
+  store: MongoStore.create({ mongoUrl: process.env.URL })
 }))
 
 app.use(passport.initialize())
