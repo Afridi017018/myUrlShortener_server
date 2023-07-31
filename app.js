@@ -6,6 +6,7 @@ const userRouter = require("./src/routes/userRouter");
 const passport = require("./src/auth/Auth");
 const session = require("express-session")
 const MongoStore = require("connect-mongo");
+const cookieSession = require("cookie-session");
 
 
 
@@ -26,14 +27,20 @@ app.use(express.json());
 
 dbConnect();
 
+app.use(cookieSession({
+  name: "session",
+  keys: [process.env.session_secret],
+  maxAge: 24 * 60 * 60 * 1000, // Set the cookie to expire after 24 hours (adjust as needed)
+  secure: false // Set to true if using HTTPS in production
+}));
 
-app.use(session({
-  secret: process.env.session_secret,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false },
-  store: MongoStore.create({ mongoUrl: process.env.URL })
-}))
+// app.use(session({
+//   secret: process.env.session_secret,
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: false },
+//   store: MongoStore.create({ mongoUrl: process.env.URL })
+// }))
 
 app.use(passport.initialize())
 app.use(passport.session())
