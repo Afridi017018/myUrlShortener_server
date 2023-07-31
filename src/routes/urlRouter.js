@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router()
-const shortId = require("shortId")
+const shortId = require("shortid")
 const isUrlValid = require('url-validation');
 
 const Url = require("../models/urlModel")
