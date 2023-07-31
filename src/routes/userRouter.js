@@ -76,8 +76,8 @@ router.post("/reg", async (req, res) => {
 
 
 
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
+router.post('/login',(req, res, next) => {
+  passport.authenticate('local', async (err, user, info) => {
     if (err) {
       return res.status(500).json({ message: "Internal Server Error" });
     }
@@ -86,7 +86,7 @@ router.post('/login', (req, res, next) => {
       return res.status(401).json({ message: "Wrong credentials !" });
     }
 
-   req.session.user = user; // Store user object in session
+   req.session.user = await user; // Store user object in session
  
 
 // console.log(req.session.user)
@@ -95,7 +95,7 @@ router.post('/login', (req, res, next) => {
 });
 
 
-router.get('/check-login', isAuthenticated, function (req, res) {
+router.get('/check-login',function (req, res) {
 console.log(req.session.user)
   if (req.session.user) {
     // console.log(req.session.user)
