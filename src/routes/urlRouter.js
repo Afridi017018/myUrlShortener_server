@@ -8,12 +8,11 @@ const Url = require("../models/urlModel")
 const isAuthenticated = (req, res, next) => {
 //  console.log(req.session.user)
 
-    // if (req.session.user) {
-    //     // console.log("ashche")
-    //     return next();
-    // }
-    // return res.status(401).json({ "message": "Unauthorized access!" })
-    next();
+    if (req.session.user) {
+        // console.log("ashche")
+        return next();
+    }
+    return res.status(401).json({ "message": "Unauthorized access!" })
 }
 
 // router.use(isAuthenticated);

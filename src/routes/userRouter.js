@@ -14,12 +14,11 @@ const saltRounds = 10;
 const isAuthenticated = (req, res, next) => {
   // console.log(req.user)
 
-  // if (req.session.user) {
-  //   // console.log("hmmm ashche to")
-  //     return next();
-  // }
-  // return res.status(401).json({ "message": "Unauthorized access!" })
-  return next()
+  if (req.session.user) {
+    // console.log("hmmm ashche to")
+      return next();
+  }
+  return res.status(401).json({ "message": "Unauthorized access!" })
 }
 
 
@@ -36,9 +35,7 @@ const isAuthenticated = (req, res, next) => {
 
 // })
 
-// router.get("/ab",(req,res)=>{
-//   res.json(req.user)
-// })
+
 
 
 router.post("/reg", async (req, res) => {
@@ -76,8 +73,8 @@ router.post("/reg", async (req, res) => {
 
 
 
-router.post('/login',(req, res, next) => {
-  passport.authenticate('local', async (err, user, info) => {
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       return res.status(500).json({ message: "Internal Server Error" });
     }
@@ -86,7 +83,8 @@ router.post('/login',(req, res, next) => {
       return res.status(401).json({ message: "Wrong credentials !" });
     }
 
-   req.session.user = await user; // Store user object in session
+   req.session.user = user; // Store user object in session
+   req.session.save();
  
 
 // console.log(req.session.user)
@@ -95,8 +93,8 @@ router.post('/login',(req, res, next) => {
 });
 
 
-router.get('/check-login',function (req, res) {
-console.log(req.session.user)
+router.get('/check-login', isAuthenticated, function (req, res) {
+
   if (req.session.user) {
     // console.log(req.session.user)
     return res.status(200).json({ isLoggedIn: true , image: req.session.user.image, name: req.session.user.name , email: req.session.user.email, id: req.session.user.id, ip: ip.address()});
