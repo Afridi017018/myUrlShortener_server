@@ -95,7 +95,7 @@ router.post('/login', (req, res, next) => {
 
 
 router.get('/check-login', isAuthenticated, function (req, res) {
-
+console.log(req.session.user)
   if (req.session.user) {
     // console.log(req.session.user)
     return res.status(200).json({ isLoggedIn: true , image: req.session.user.image, name: req.session.user.name , email: req.session.user.email, id: req.session.user.id, ip: ip.address()});
