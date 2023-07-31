@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors")
-const dbConnect = require("./src/config/db");
+// const dbConnect = require("./src/config/db");
 const urlRouter = require("./src/routes/urlRouter");
 const userRouter = require("./src/routes/userRouter");
 const passport = require("./src/auth/Auth");
@@ -23,7 +23,7 @@ app.use(cors({
 app.use(express.json());
 
 
-dbConnect();
+
 
 
 app.use(session({
