@@ -35,6 +35,9 @@ const isAuthenticated = (req, res, next) => {
 
 // })
 
+router.get("/ab",(req,res)=>{
+  res.json(req.user)
+})
 
 
 router.post("/reg", async (req, res) => {
