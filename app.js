@@ -6,7 +6,7 @@ const userRouter = require("./src/routes/userRouter");
 const passport = require("./src/auth/Auth");
 const session = require("express-session")
 const MongoStore = require("connect-mongo");
-const cookieSession = require("cookie-session");
+
 
 
 
@@ -16,34 +16,25 @@ const app = express();
 
 
 
-const allowedOrigin = "https://fast-link-final.netlify.app";
 
 
 app.use(cors({
-  origin: allowedOrigin,
-  credentials: true,
-  allowedHeaders: ['Content-Type'], // Allow the "Content-Type" header
+  origin: process.env.origin, // Replace with your frontend URL
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 
-
-// app.use(cors({
-//   origin: process.env.origin, // Replace with your frontend URL
-//   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-// }));
-
-
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", process.env.origin);
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 app.use(express.json());
 
 
 dbConnect();
 
-// app.use(cookieSession({
-//   name: "session",
-//   keys: [process.env.session_secret],
-//   maxAge: 24 * 60 * 60 * 1000, // Set the cookie to expire after 24 hours (adjust as needed)
-//   secure: false // Set to true if using HTTPS in production
-// }));
+
 
 app.use(session({
   secret: process.env.session_secret,
@@ -51,17 +42,13 @@ app.use(session({
   saveUninitialized: false,
   cookie: { 
     secure: false,
-    // sameSite: 'none',
+    sameSite: 'none',
    },
   store: MongoStore.create({ mongoUrl: process.env.URL })
 }))
 
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", allowedOrigin);
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+
 
 app.use(passport.initialize())
 app.use(passport.session())
