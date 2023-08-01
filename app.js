@@ -14,7 +14,7 @@ require("dotenv").config()
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["https://fast-link-final.netlify.app"];
 
 // Use the cors middleware with a custom options function
 app.use(cors({
