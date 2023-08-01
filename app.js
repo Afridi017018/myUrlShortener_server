@@ -23,11 +23,11 @@ app.use(cors({
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.origin);
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", process.env.origin);
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
 
 app.use(express.json());
 
@@ -42,7 +42,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: { 
     secure: false,
-    sameSite: 'none',
+    // sameSite: 'none',
    },
   store: MongoStore.create({ mongoUrl: process.env.URL })
 }))
