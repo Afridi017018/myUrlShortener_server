@@ -14,19 +14,15 @@ require("dotenv").config()
 
 const app = express();
 
-const allowedOrigins = ["https://fast-link-final.netlify.app"];
 
-// Use the cors middleware with a custom options function
+
+const allowedOrigin = "http://localhost:3000";
+
+
 app.use(cors({
-  origin: (origin, callback) => {
-    // Check if the request origin is allowed
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: allowedOrigin,
+  credentials: true,
+  allowedHeaders: ['Content-Type'], // Allow the "Content-Type" header
 }));
 
 
@@ -59,6 +55,13 @@ app.use(session({
    },
   store: MongoStore.create({ mongoUrl: process.env.URL })
 }))
+
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", allowedOrigin);
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 app.use(passport.initialize())
 app.use(passport.session())
