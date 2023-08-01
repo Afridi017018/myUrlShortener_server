@@ -16,7 +16,7 @@ const app = express();
 
 
 
-const allowedOrigin = "http://localhost:3000";
+const allowedOrigin = "https://fast-link-final.netlify.app";
 
 
 app.use(cors({
