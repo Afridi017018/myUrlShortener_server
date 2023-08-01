@@ -14,11 +14,26 @@ require("dotenv").config()
 
 const app = express();
 
+const allowedOrigins = ["http://localhost:3000"];
 
+// Use the cors middleware with a custom options function
 app.use(cors({
-  origin: process.env.origin, // Replace with your frontend URL
+  origin: (origin, callback) => {
+    // Check if the request origin is allowed
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
+
+
+// app.use(cors({
+//   origin: process.env.origin, // Replace with your frontend URL
+//   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+// }));
 
 
 
@@ -40,7 +55,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: { 
     secure: false,
-    sameSite: 'none',
+    // sameSite: 'none',
    },
   store: MongoStore.create({ mongoUrl: process.env.URL })
 }))
