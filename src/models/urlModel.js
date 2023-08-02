@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const UrlSchema = new mongoose.Schema({
   urlCode: {
@@ -26,12 +26,12 @@ const UrlSchema = new mongoose.Schema({
     default: 0,
   },
   createdAt: {
-    type: String,
-    default: Date.now(),
+    type: Date,
+    default: Date.now,
   },
   updatedAt: {
-    type: String,
-    default: Date.now(),
+    type: Date,
+    default: Date.now,
   },
   userId: {
     type: String,
@@ -39,14 +39,26 @@ const UrlSchema = new mongoose.Schema({
   },
 });
 
+
+function formatDate(date) {
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+  const year = date.getFullYear().toString().slice(-2);
+  const formattedDate = `${day}-${month}-${year}`;
+  return formattedDate;
+}
+
 UrlSchema.set("toJSON", {
   virtuals: true,
   versionKey: false,
   transform: function (doc, ret) {
+    ret.createdAt = formatDate(ret.createdAt);
+    ret.updatedAt = formatDate(ret.updatedAt);
     delete ret._id;
   },
 });
 
-Url = mongoose.model("urls", UrlSchema);
 
-module.exports = Url;
+const UrlModel = mongoose.model("Url", UrlSchema);
+
+module.exports = UrlModel;
